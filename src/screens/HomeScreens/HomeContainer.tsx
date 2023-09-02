@@ -24,12 +24,12 @@ class HomeContainer extends Component<{}, HomeContainerState> {
     async componentDidMount(){
         try{
             const {data} = await homeApi.nowPlaying();
-            const movieArray = data.result.map((result:any) => result.id)
+            const movieArray = data.results.map((result:any) => result.id)
             const movieId = movieArray[Math.floor(Math.random() * movieArray.length)]
 
             try{
                 const {data : movieDetail} = await homeApi.movieDetail(movieId);
-                if(movieDetail.videos.result.length === 0){
+                if(movieDetail.videos.results.length === 0){
                     const { data : defaultMovieDetail } = await homeApi.movieDetail(497698);
                     this.setState({movieDetail : defaultMovieDetail})
                 }else{

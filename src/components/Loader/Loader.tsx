@@ -1,4 +1,4 @@
-import exp from "constants"
+import React from "react"
 import styles from './Loader.module.css' 
 import loadingBar from '../../assets/loading.svg'
 
