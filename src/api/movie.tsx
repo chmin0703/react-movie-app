@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import { promises } from "dns";
 
 type NowPlayingData = any;
 type MovieDetailData = any;
@@ -7,9 +8,14 @@ const REST_API_ADDR = axios.create({
     baseURL : "https://api.themoviedb.org/3/",
     params : {
         language : "KO-KR",
+        api_key : "f99815a202a8f01d29367f660234cf86"
     },
 })
 
 export const homeApi = {
+    nowPlaying : () : Promise<AxiosResponse<NowPlayingData>> => REST_API_ADDR.get("movie/now_playing"),
 
+    movieDetail : (id:number) : Promise<AxiosResponse<MovieDetailData>> => REST_API_ADDR.get(`movie/${id}`,{
+        params : {append_toresponse : "videos"}
+    }),
 }
