@@ -16,6 +16,6 @@ export const homeApi = {
     nowPlaying : () : Promise<AxiosResponse<NowPlayingData>> => REST_API_ADDR.get("movie/now_playing"),
 
     movieDetail : (id:number) : Promise<AxiosResponse<MovieDetailData>> => REST_API_ADDR.get(`movie/${id}`,{
-        params : {append_toresponse : "videos"}
+        params : {append_to_response : "videos"}
     }),
 }
