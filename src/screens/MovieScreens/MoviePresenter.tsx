@@ -8,6 +8,10 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import React, { useState, useEffect } from "react";
 import useInfiniteScroll from "../../components/util/useInfinitesScroll";
+import { movieApi } from "../../api/movie";
+
+import uniqBy from 'lodash/uniqBy';
+import path from "path";
 
 interface MoviePresenterProps{
     nowPlaying: any[] | null;
@@ -49,9 +53,35 @@ const MoviePresenter : React.FC<MoviePresenterProps>=({
         if(page !== 1){
             try{
                 let newMovies : any[] = [];
+                if(pathname === "/movie"){
+                    const { data } = await movieApi.popularInfinite(page);
+                    newMovies = data.results;
+                }else if(pathname === "/movie/now-playing"){
+                    const { data } = await movieApi.nowPlayingInfinite(page)
+                    newMovies = data.results;
+                }else if(pathname === "/movie/upcoming"){
+                    const { data } = await movieApi.upcomingInfinite(page)
+                    newMovies = data.results;
+                }else if(pathname === "/movie/top-rated"){
+                    const { data } = await movieApi.topRatedInfinite(page)
+                    newMovies = data.results;
+                }
+
+                const totalMovies = [...popularMovies, ...newMovies];
+                const uniqByMovies = uniqBy(totalMovies, "id");
+
+                if(pathname === "/movie"){
+                    setpopularMovies(uniqByMovies);
+                }else if(pathname === "/movie/now-playing"){
+                    setnowPlayingMovies(uniqByMovies)
+                }else if(pathname === "/movie/upcoming"){
+                    setupcomingMovies(uniqByMovies)
+                }else if(pathname === "/movie/top-rated"){
+                    settopRatedMovies(uniqByMovies)
+                }
             }
             catch{
-                
+
             }
         }
     }
