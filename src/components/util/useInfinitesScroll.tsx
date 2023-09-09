@@ -1,7 +1,6 @@
 import exp from "constants";
 import { useEffect, useState } from "react";
 
-
 const useInfiniteScroll = () : number => {
     const [page, setPage] = useState<number>(1);
 
