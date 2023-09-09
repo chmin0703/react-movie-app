@@ -1,11 +1,39 @@
 import { Component, ReactNode } from "react";
 import DetailPresenter from "./DetailPresenter";
+import { useParams } from "react-router-dom";
+import withRouter from "../../components/util/withRouter";
 
-class DetailContainer extends Component<{}, any>{
+interface DetailContainerState {
+    result : any | null,
+    error : string | null,
+    loading : boolean,
+    recommendations : any,
+    cast : any,
+    keyword : any,
+    backdrops : any,
+    posters : any,
+    tvDetail2 : any,
+    reviews : any
+}
+
+class DetailContainer extends Component<{}, DetailContainerState>{
 
     constructor(props : any){
         super(props);
+        this.state={
+            result : [],
+            error : null,
+            loading : true,
+            recommendations : [null],
+            cast : [],
+            keyword : [],
+            reviews : [],
+            backdrops : [],
+            posters : [],
+            tvDetail2 : []
+        };
     }
+
 
     render(){
         return <DetailPresenter/>
@@ -13,4 +41,4 @@ class DetailContainer extends Component<{}, any>{
 
 };
 
-export default DetailContainer;
+export default withRouter(DetailContainer);
